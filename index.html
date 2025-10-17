@@ -1,82 +1,164 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 2 - SVG Transformations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ffffff;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        .svg-container {
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            border: 1px solid #eee;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+        .svg-container svg {
+            width: 100%;
+            height: 100%;
+        }
+        .mirrored {
+            transform: scaleX(-1);
+        }
+        .rotated {
+            transform: rotate(180deg);
+        }
+        .squeezed {
+            transform: scaleY(0.5);
+        }
+        .grayscale {
+            filter: grayscale(100%);
+        }
+        tr:nth-child(even) {
+            background-color: hsl(0, 0%, 98%);
+        }
+    </style>
 </head>
-
 <body>
-    <table>
-        <tr>
-            <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-        <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-         <tr>
-             <td>original</td>
-            <td>left-right mirrored</td>
-            <td>rotated 180 degree</td>
-            <td>vertically squeezed by 50%</td>
-            <td>grayscale</td>
-        </tr>
-    </table>
+    <div class="container">
+        <h1>Assignment 2: SVG Transformations</h1>
+        <p style="text-align: center; color: #666;">Displaying 10 SVG files with 5 transformations each</p>
+        
+        <table id="svgTable">
+            <thead>
+                <tr>
+                    <th>Original</th>
+                    <th>Left-Right Mirrored</th>
+                    <th>Rotated 180°</th>
+                    <th>Vertically Squeezed 50%</th>
+                    <th>Grayscale</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- SVG rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Array of 10 asymmetric SVG files (inline SVG data)
+        const svgs = [
+            // SVG 1: Asymmetric leaf
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,80 Q30,50 40,30 Q50,10 70,20 Q60,40 50,60 Q40,80 20,80 Z" fill="#FF6B6B"/><circle cx="45" cy="45" r="3" fill="#8B0000"/></svg>',
+            
+            // SVG 2: Irregular shape with offset circle
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="15" y="25" width="50" height="60" fill="#4ECDC4"/><circle cx="70" cy="30" r="15" fill="#2C7A73"/></svg>',
+            
+            // SVG 3: Right triangle with dot
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="20,20 20,80 80,80" fill="#45B7D1"/><circle cx="35" cy="65" r="5" fill="#1E5A6E"/></svg>',
+            
+            // SVG 4: Flag shape
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="15" y="10" width="5" height="80" fill="#333"/><path d="M20,15 L75,15 L65,35 L75,55 L20,55 Z" fill="#FFA07A"/></svg>',
+            
+            // SVG 5: Asymmetric arrow pointing right-up
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="10,70 30,50 30,60 70,20 75,25 35,65 45,65" fill="#E74C3C"/></svg>',
+            
+            // SVG 6: L-shape with circle
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 L20,80 L80,80 L80,60 L40,60 L40,20 Z" fill="#9B59B6"/><circle cx="60" cy="40" r="8" fill="#5B2C7A"/></svg>',
+            
+            // SVG 7: Fish shape
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><ellipse cx="55" cy="50" rx="35" ry="20" fill="#3498DB"/><polygon points="20,50 30,40 30,60" fill="#3498DB"/><circle cx="70" cy="45" r="3" fill="#fff"/></svg>',
+            
+            // SVG 9: Abstract bird
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><ellipse cx="45" cy="45" rx="20" ry="25" fill="#1ABC9C"/><ellipse cx="70" cy="35" rx="15" ry="10" fill="#1ABC9C"/><polygon points="30,35 15,25 30,30" fill="#1ABC9C"/><circle cx="50" cy="40" r="2" fill="#000"/></svg>',
+            
+            // SVG 10: House with chimney
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,20 85,50 75,50 75,85 25,85 25,50 15,50" fill="#E67E22"/><rect x="65" y="10" width="8" height="25" fill="#A0522D"/><rect x="40" y="60" width="15" height="25" fill="#8B4513"/></svg>',
+            
+            // SVG 11: Teardrop shape
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,15 Q70,35 70,60 Q70,80 50,85 Q30,80 30,60 Q30,35 50,15 Z" fill="#FF69B4"/><circle cx="48" cy="55" r="4" fill="#C71585"/></svg>'
+        ];
+
+        function createSVGCell(svgContent, className = '') {
+            const td = document.createElement('td');
+            const div = document.createElement('div');
+            div.className = 'svg-container ' + className;
+            div.innerHTML = svgContent;
+            td.appendChild(div);
+            return td;
+        }
+
+        function populateTable() {
+            const tbody = document.getElementById('tableBody');
+            
+            svgs.forEach((svg, index) => {
+                const row = document.createElement('tr');
+                
+                // Original
+                row.appendChild(createSVGCell(svg));
+                
+                // Left-Right Mirrored
+                row.appendChild(createSVGCell(svg, 'mirrored'));
+                
+                // Rotated 180 degrees
+                row.appendChild(createSVGCell(svg, 'rotated'));
+                
+                // Vertically Squeezed 50%
+                row.appendChild(createSVGCell(svg, 'squeezed'));
+                
+                // Grayscale
+                row.appendChild(createSVGCell(svg, 'grayscale'));
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize the table when page loads
+        populateTable();
+    </script>
 </body>
 </html>
